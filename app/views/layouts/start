@@ -1,5 +1,74 @@
 start
-ch 9 9.2.3 Friendly forwarding
+10.3 
 
 exercises not done
 7.31
+9.8
+9.9
+
+
+
+
+<% provide(:title, 'Sign up') %>
+<h1>Sign up</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@user) do |f| %>
+		  <%= render 'shared/error_messages' %>
+		  <%= f.label :name %>
+		  <%= f.text_field :name %>
+		  
+		  <%= f.label :email %>
+		  <%= f.text_field :email %>
+
+          <%= f.label :password %>
+		  <%= f.password_field :password %>
+
+		  <%= f.label :password_confirmation, "Confirmation" %>
+		  <%= f.password_field :password_confirmation %>
+ 
+          <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+        <% end %>
+      </div>
+  </div>
+
+
+<% provide(:title, "Edit user") %>
+<h1>Update your profile</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@user) do |f| %>
+		  <%= render 'shared/error_messages' %>
+
+		  <%= f.label :name %>
+		  <%= f.text_field :name %>
+
+		  <%= f.label :email %>
+		  <%= f.text_field :email %>
+
+		  <%= f.label :password %>
+		  <%= f.password_field :password %>
+
+		  <%= f.label :password_confirmation, "Confirm Password" %>
+		  <%= f.password_field :password_confirmation %>
+
+          <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+        <% end %>
+
+        <%= gravatar_for @user %>
+        <a href="http://gravatar.com/emails">change</a>
+        <%= link_to 'change', 'http://gravatar.com/emails', target: '_blank' %>
+    </div>
+</div>
+
+  	describe "as admin user" do
+  		let(:admin) { FactoryGirl.create(:admin) }
+  		#before { sign_in admin, no_capybara: true }
+      describe "admin users should not be able to destroy themselves" do
+      	specify do
+      		expect  { delete user_path(admin) }.not_to change(User, :count).by(-1)
+      	end
+      end
+  	end
